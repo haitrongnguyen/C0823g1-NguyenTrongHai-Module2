@@ -2,7 +2,7 @@ package ss01_IntroductiontoJava.bai_tap;
 
 import java.util.Scanner;
 
-public class Doc {
+public class DocSoThanhChuoi {
     public static void main(String[] args) {
         int number;
         Scanner scanner = new Scanner(System.in);
