@@ -1,4 +1,4 @@
-package ss04_Class_Obj.bai_tap;
+package ss04_Class_Obj.bai_tap.fan;
 
 
 public class Fan {
