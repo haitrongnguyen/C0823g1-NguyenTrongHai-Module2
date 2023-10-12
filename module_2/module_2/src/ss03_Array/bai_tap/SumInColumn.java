@@ -33,11 +33,7 @@ public class SumInColumn {
         } while (column > n);
         int sum = 0;
         for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                if (j == column) {
-                    sum += array[i][j];
-                }
-            }
+            sum += array[i][column];
         }
         System.out.println("Sum = " + sum);
     }

@@ -24,11 +24,7 @@ public class SumInMatrix {
         }
         int sum = 0;
         for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                if (j == i) {
-                    sum += array2D[i][j];
-                }
-            }
+            sum += array2D[i][i];
         }
         System.out.println("Sum of the numbers on the main diagonal: " + sum);
     }
