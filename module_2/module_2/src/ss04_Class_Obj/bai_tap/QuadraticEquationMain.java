@@ -2,7 +2,7 @@ package ss04_Class_Obj.bai_tap;
 
 import java.util.Scanner;
 
-public class QuadraticEquationRun {
+public class QuadraticEquationMain {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("The quadratic equation has the form: ax^2+bx+c");

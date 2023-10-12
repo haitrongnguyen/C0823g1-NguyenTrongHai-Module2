@@ -1,6 +1,6 @@
 package ss04_Class_Obj.bai_tap;
 
-public class FanRun {
+public class FanMain {
     public static void main(String[] args) {
         Fan fan1 = new Fan();
         fan1.setSpeed(fan1.FAST);
