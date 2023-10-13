@@ -1,19 +1,22 @@
-package ss05_AccessModifier_Static.bai_tap;
+package ss05_AccessModifier_Static.bai_tap.circle;
 
-public class TestCircle {
+public class Circle {
     private double radius = 1.0;
     private String color = "red";
-    TestCircle(){};
-    TestCircle(double radius){
+
+    Circle() {
+    }
+
+    Circle(double radius) {
         this.radius = radius;
     }
 
-    private double getRadius() {
+    public double getRadius() {
         return radius;
     }
 
-   private double getArea() {
-        return Math.pow(this.radius,2)*3.14;
+    public double getArea() {
+        return Math.pow(this.radius, 2) * 3.14;
     }
 
     @Override
