@@ -4,12 +4,12 @@ public class Point2D {
     private float x = 0.0f;
     private float y = 0.0f;
 
-    Point2D(float x, float y) {
+    public Point2D(float x, float y) {
         this.x = x;
         this.y = y;
     }
 
-    Point2D() {
+    public Point2D() {
     }
 
     public float getX() {
