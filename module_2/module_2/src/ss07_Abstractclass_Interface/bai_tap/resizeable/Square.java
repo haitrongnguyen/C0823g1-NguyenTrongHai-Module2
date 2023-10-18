@@ -1,37 +1,43 @@
 package ss07_Abstractclass_Interface.bai_tap.resizeable;
 
-public class Square extends Rectangle implements Resizeable{
-    Square(){}
-    Square(double side){
-        super(side,side);
+import ss07_Abstractclass_Interface.bai_tap.colorable.Colorable;
+
+public class Square extends Shape implements Resizeable, Colorable {
+
+
+    private double side;
+
+    public Square() {
     }
-    Square(double side,String color,boolean filled){
-        super(side,side,color,filled);
+
+    public double getSide() {
+        return side;
     }
-    public void setSide(double side){
-        setWidth(side);
-        setLength(side);
+
+    public void setSide(double side) {
+        this.side = side;
     }
-    public double getSide(){
-        return getWidth();
+
+    public Square(double side) {
+        this.side = side;
     }
-    @Override
-    public void setLength(double length){
-        setSide(length);
+    public double getArea() {
+        return Math.pow(this.side, 2);
     }
-    @Override
-    public void setWidth(double width){
-        setSide(width);
-    }
-    @Override
-    public String toString(){
-        return "A square with side="+
-                getSide()+" which is a subclass of "+
-                super.toString();
+
+    public String toString() {
+        return "Square{" +
+                "side=" + side +
+                '}';
     }
 
     @Override
     public void resize(double percent) {
-        setSide(getSide()*(Math.random()*percent+100)/100);
+        setSide(side*percent);
+    }
+
+    @Override
+    public void howToColor() {
+        System.out.println("Color all four sides");
     }
 }

@@ -1,6 +1,6 @@
 package ss07_Abstractclass_Interface.bai_tap.resizeable;
 
-public class Circle extends Shape implements Resizeable {
+public class Circle extends Shape implements Resizeable{
     private double radius = 1.0;
 
     public Circle() {
@@ -39,9 +39,8 @@ public class Circle extends Shape implements Resizeable {
                 + super.toString();
     }
 
-
     @Override
     public void resize(double percent) {
-        setRadius(radius*(Math.random()*percent+100)/100);
+        setRadius(radius*percent);
     }
 }
