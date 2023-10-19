@@ -5,11 +5,11 @@ import ss07_Abstractclass_Interface.bai_tap.colorable.Colorable;
 public class Square extends Rectangle implements Resizeable, Colorable {
 
 
-    Square(){}
+    public Square(){}
     public Square(double side){
         super(side,side);
     }
-    Square(double side,String color,boolean filled){
+    public Square(double side,String color,boolean filled){
         super(side,side,color,filled);
     }
     public void setSide(double side){
