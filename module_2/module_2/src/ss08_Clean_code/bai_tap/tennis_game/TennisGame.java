@@ -2,16 +2,28 @@ package ss08_Clean_code.bai_tap.tennis_game;
 
 public class TennisGame {
 
+    private static final int ZERO = 0;
+    private static final int FIRST_SCORE = 1;
+    private static final int SECOND_SCORE = 2;
+    private static final int THIRD_SCORE = 3;
+    private static final String ALL = " - All";
+    private static final String LOVE = "Love";
+    private static final String FIFTEEN = "Fifteen";
+    private static final String THIRTY = "Thirty";
+    private static final String FORTY = "Forty";
+
+
     public static String getScore(String player1Name, String player2Name, int mScore1, int mScore2) {
         String score;
         boolean isEquals = (mScore1 == mScore2);
+        boolean isFinal = mScore1 >= 4 || mScore2 >= 4;
         if (isEquals) {
             if (mScore1 > 0 && mScore1 <= 3) {
-                score = returnScore(mScore1) + " - All";
+                score = returnScore(mScore1) + ALL;
             } else {
                 score = "Deuce";
             }
-        } else if (mScore1 >= 4 || mScore2 >= 4) {
+        } else if (isFinal) {
             score = commentResult(player1Name, player2Name, mScore1, mScore2);
         } else {
             score = returnScore(mScore1) + "-" + returnScore(mScore2);
@@ -22,17 +34,17 @@ public class TennisGame {
     public static String returnScore(int score) {
         String result = "";
         switch (score) {
-            case 0:
-                result = "Love";
+            case ZERO:
+                result = LOVE;
                 break;
-            case 1:
-                result = "Fifteen";
+            case FIRST_SCORE:
+                result = FIFTEEN;
                 break;
-            case 2:
-                result = "Thirty";
+            case SECOND_SCORE:
+                result = THIRTY;
                 break;
-            case 3:
-                result = "Forty";
+            case THIRD_SCORE:
+                result = FORTY;
                 break;
         }
         return result;
