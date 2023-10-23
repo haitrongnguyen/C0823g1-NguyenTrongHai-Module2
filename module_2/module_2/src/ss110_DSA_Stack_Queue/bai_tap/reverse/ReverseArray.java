@@ -1,10 +1,10 @@
-package ss110_DSA_Stack_Queue.bai_tap.dao_nguoc;
+package ss110_DSA_Stack_Queue.bai_tap.reverse;
 
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.Stack;
 
-public class Array {
+public class ReverseArray {
     public static void main(String[] args) {
 //        ArrayList<Integer> arrayList = new ArrayList<>();
 //        arrayList.add(1);

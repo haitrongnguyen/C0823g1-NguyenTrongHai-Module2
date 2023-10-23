@@ -1,4 +1,4 @@
-package ss110_DSA_Stack_Queue.decimal_to_binary;
+package ss110_DSA_Stack_Queue.bai_tap.decimal_to_binary;
 
 import java.util.Scanner;
 import java.util.Stack;

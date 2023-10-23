@@ -1,8 +1,8 @@
-package ss110_DSA_Stack_Queue.bai_tap.dao_nguoc;
+package ss110_DSA_Stack_Queue.bai_tap.reverse;
 
 import java.util.Stack;
 
-public class StringStack {
+public class ReverseString {
     public static void main(String[] args) {
         String str = "abcdefg";
         System.out.println("Chuỗi nhập vào: " + str);
