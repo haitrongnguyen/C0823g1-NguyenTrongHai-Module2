@@ -28,4 +28,13 @@ public class Student extends Person {
     public void setScore(double score) {
         this.score = score;
     }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                super.toString()+
+                "className='" + className + '\'' +
+                ", score=" + score +
+                '}';
+    }
 }

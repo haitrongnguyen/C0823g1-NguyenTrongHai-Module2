@@ -18,4 +18,12 @@ public class Teacher extends Person{
     public void setLevel(String level) {
         this.level = level;
     }
+
+    @Override
+    public String toString() {
+        return "Teacher{" +
+                super.toString()+
+                "level='" + level + '\'' +
+                '}';
+    }
 }
