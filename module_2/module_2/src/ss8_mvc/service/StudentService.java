@@ -1,5 +1,6 @@
 package ss8_mvc.service;
 
+import ss8_mvc.model.Student;
 import ss8_mvc.repository.IStudentRepository;
 import ss8_mvc.repository.StudentRepository;
 
@@ -8,5 +9,9 @@ public class StudentService implements IStudentService{
     @Override
     public void showList() {
         iStudentRepository.showList();
+    }
+
+    @Override
+    public void addStudent(Student student) {
     }
 }
