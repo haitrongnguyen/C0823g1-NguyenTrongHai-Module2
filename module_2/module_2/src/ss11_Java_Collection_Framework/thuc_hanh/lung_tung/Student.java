@@ -1,6 +1,6 @@
-package ss11_Java_Collection_Framework.thuc_hanh.hash_map_hash_set;
+package ss11_Java_Collection_Framework.thuc_hanh.lung_tung;
 
-public class Student {
+public class Student implements Comparable<Student> {
     private String name;
     private int age;
     private String address;
@@ -42,8 +42,13 @@ public class Student {
     public String toString() {
         return "Student{" +
                 "name='" + name + '\'' +
-                ", age=" + age +
+                ", age='" + age + '\'' +
                 ", address='" + address + '\'' +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Student student) {
+        return this.getName().compareTo(student.getName());
     }
 }

@@ -2,8 +2,9 @@ package ss11_Java_Collection_Framework.bai_tap.product_manager.service;
 
 import ss11_Java_Collection_Framework.bai_tap.product_manager.repository.ProductRepository;
 
-public class ProductService implements IProductService{
+public class ProductService implements IProductService {
     private ProductRepository productRepository = new ProductRepository();
+
     @Override
     public void showProduct() {
         productRepository.showProduct();
@@ -33,7 +34,8 @@ public class ProductService implements IProductService{
     public void sortDownProduct() {
         productRepository.sortDownProduct();
     }
-    public void searchProduct(){
+
+    public void searchProduct() {
         productRepository.searchProduct();
     }
 }

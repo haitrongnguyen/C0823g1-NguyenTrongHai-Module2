@@ -13,12 +13,12 @@ public class ProductView {
                     "2. Thêm sản phẩm \n" +
                     "3. Sửa sản phẩm(theo Id) \n" +
                     "4. Xóa sản phẩm(theo Id)\n" +
-                    "5. Sắp xếp tăng dần\n"+
-                    "6. Sắp xếp giảm dần\n"+
+                    "5. Sắp xếp giảm dần\n" +
+                    "6. Sắp xếp tăng dần\n" +
                     "8. Thoát");
             Scanner scanner = new Scanner(System.in);
             int choice = Integer.parseInt(scanner.nextLine());
-            switch (choice){
+            switch (choice) {
                 case 1:
                     productController.showProduct();
                     break;
@@ -43,6 +43,6 @@ public class ProductView {
                 case 8:
                     System.exit(0);
             }
-        }while (true);
+        } while (true);
     }
 }

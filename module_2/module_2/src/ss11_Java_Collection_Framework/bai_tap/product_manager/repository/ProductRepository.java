@@ -29,9 +29,10 @@ public class ProductRepository implements IProductRepository {
     @Override
     public void addProduct() {
         int id;
+        int inputId;
         do {
             System.out.println("Nhập id: ");
-            int inputId = Integer.parseInt(scanner.nextLine());
+            inputId = Integer.parseInt(scanner.nextLine());
             if (checkId(inputId)) {
                 System.out.println("Nhập lại id");
             } else {
@@ -55,9 +56,10 @@ public class ProductRepository implements IProductRepository {
     @Override
     public void editProduct() {
         int id;
+        int inputId;
         do {
             System.out.println("Nhập id của sản phẩm muốn sửa");
-            int inputId = Integer.parseInt(scanner.nextLine());
+            inputId = Integer.parseInt(scanner.nextLine());
             if (checkId(inputId)) {
                 for (Products p : productsList) {
                     if (inputId == p.getId()) {
@@ -82,15 +84,15 @@ public class ProductRepository implements IProductRepository {
     public void deleteProduct() {
         System.out.println("Nhập id của sản phẩm cần xóa");
         int inputId = Integer.parseInt(scanner.nextLine());
-        if (checkId(inputId)){
-            for (int i = 0;i<productsList.size();i++){
+        if (checkId(inputId)) {
+            for (int i = 0; i < productsList.size(); i++) {
                 Products products = productsList.get(i);
-                if (inputId == products.getId()){
+                if (inputId == products.getId()) {
                     productsList.remove(products);
                     System.out.println("Xóa thành công");
                 }
             }
-        }else {
+        } else {
             System.out.println("Id không tồn tại");
         }
 
@@ -98,7 +100,7 @@ public class ProductRepository implements IProductRepository {
 
     @Override
     public void sortUpProduct() {
-        Collections.sort(productsList,new SortProduct());
+        Collections.sort(productsList, new SortProduct());
     }
 
     @Override
@@ -113,14 +115,14 @@ public class ProductRepository implements IProductRepository {
         boolean checkName = false;
         Products products = null;
         for (int i = 0; i < productsList.size(); i++) {
-            if (inputName.equals(productsList.get(i).getProductName())){
+            if (inputName.equals(productsList.get(i).getProductName())) {
                 checkName = true;
                 products = productsList.get(i);
             }
         }
-        if (checkName){
-            System.out.println("Sản phẩm: "+products);
-        }else {
+        if (checkName) {
+            System.out.println("Sản phẩm: " + products);
+        } else {
             System.out.println("Không tìm thấy");
         }
     }

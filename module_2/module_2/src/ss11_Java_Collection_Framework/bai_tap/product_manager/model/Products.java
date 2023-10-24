@@ -51,4 +51,7 @@ public class Products implements Comparable<Products> {
     public int compareTo(Products products) {
         return Integer.compare(this.getPrice(),products.getPrice());
     }
+    public int compare(Products products){
+        return Integer.compare(products.getPrice(),this.getPrice());
+    }
 }

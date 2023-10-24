@@ -1,4 +1,4 @@
-package ss11_Java_Collection_Framework.thuc_hanh.hash_map_hash_set;
+package ss11_Java_Collection_Framework.thuc_hanh.lung_tung;
 
 import java.util.ArrayList;
 import java.util.Collections;

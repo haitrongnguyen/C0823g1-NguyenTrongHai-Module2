@@ -4,25 +4,32 @@ import ss11_Java_Collection_Framework.bai_tap.product_manager.service.ProductSer
 
 public class ProductController {
     ProductService productService = new ProductService();
-    public void showProduct(){
+
+    public void showProduct() {
         productService.showProduct();
     }
-    public void addProduct(){
+
+    public void addProduct() {
         productService.addProduct();
     }
-    public void editProduct(){
+
+    public void editProduct() {
         productService.editProduct();
     }
+
     public void deleteProduct() {
         productService.deleteProduct();
     }
-    public void sortUpProduct(){
+
+    public void sortUpProduct() {
         productService.sortUpProduct();
     }
-    public void sortDownProduct(){
+
+    public void sortDownProduct() {
         productService.sortDownProduct();
     }
-    public void searchProduct(){
+
+    public void searchProduct() {
         productService.searchProduct();
     }
 }
