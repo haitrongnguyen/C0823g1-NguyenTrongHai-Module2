@@ -51,6 +51,7 @@ public class BinarySearch {
     public static void main(String[] args) {
         int[] arr = {9, 7, 3, 8, 1, 5, 6, 4, 7, 15, 45, 87};
         sort(arr);
+        System.out.println("Mảng sau khi sắp xếp:");
         System.out.println(Arrays.toString(arr));
 //        int binary = binarySearch(0, arr.length - 1, arr, 50);
 //        if (binary == -1){
@@ -58,6 +59,12 @@ public class BinarySearch {
 //        }else {
 //            System.out.println("Có phần tử trong chuỗi");
 //        }
-        System.out.println(binarySearch(0, arr.length - 1, arr, 100));
+        int number = 21;
+        boolean findNumber = binarySearch(0, arr.length - 1, arr, number);
+        if (findNumber) {
+            System.out.println("Có phần tử " + number + " trong chuỗi");
+        } else {
+            System.out.println("Không tìm thấy " + number + " trong mảng");
+        }
     }
 }
