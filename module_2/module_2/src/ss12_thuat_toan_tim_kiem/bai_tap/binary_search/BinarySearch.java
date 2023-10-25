@@ -4,38 +4,38 @@ package ss12_thuat_toan_tim_kiem.bai_tap.binary_search;
 import java.util.Arrays;
 
 public class BinarySearch {
-    static int binarySearch(int low, int high, int[] arr, int number) {
+//    private static int binarySearch(int low, int high, int[] arr, int number) {
+//        int mid;
+//        if (low <= high) {
+//            mid = low + (high - low) / 2;
+//            if (arr[mid] == number) {
+//                return mid;
+//            } else if (arr[mid] > number) {
+//                return binarySearch(low, mid - 1, arr, number);
+//            } else {
+//                return binarySearch(mid + 1, high, arr, number);
+//            }
+//        }
+//        return -1;
+//    }
+
+    private static boolean binarySearch(int low, int high, int[] arr, int number) {
         int mid;
+        boolean flag = false;
         if (low <= high) {
-            mid = low + (high - low) / 2;
+            mid = (high + low) / 2;
             if (arr[mid] == number) {
-                return mid;
+                flag = true;
             } else if (arr[mid] > number) {
                 return binarySearch(low, mid - 1, arr, number);
             } else {
                 return binarySearch(mid + 1, high, arr, number);
             }
         }
-        return -1;
-    }
-
-    static boolean binarySearch1(int low, int high, int[] arr, int number) {
-        int mid;
-        boolean flag = false;
-        if (low <= high) {
-            mid = low + (high - low) / 2;
-            if (arr[mid] == number) {
-                flag = true;
-            } else if (arr[mid] > number) {
-                return binarySearch1(low, mid - 1, arr, number);
-            } else {
-                return binarySearch1(mid + 1, high, arr, number);
-            }
-        }
         return flag;
     }
 
-    static void sort(int[] arr) {
+    private static void sort(int[] arr) {
         int temp;
         for (int i = 0; i < arr.length; i++) {
             for (int j = i; j < arr.length; j++) {
@@ -58,6 +58,6 @@ public class BinarySearch {
 //        }else {
 //            System.out.println("Có phần tử trong chuỗi");
 //        }
-        System.out.println(binarySearch1(0, arr.length - 1, arr, 100));
+        System.out.println(binarySearch(0, arr.length - 1, arr, 100));
     }
 }
