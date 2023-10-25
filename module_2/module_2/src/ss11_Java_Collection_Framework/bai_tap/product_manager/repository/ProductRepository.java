@@ -1,22 +1,21 @@
 package ss11_Java_Collection_Framework.bai_tap.product_manager.repository;
 
-import ss11_Java_Collection_Framework.bai_tap.product_manager.model.Products;
+import ss11_Java_Collection_Framework.bai_tap.product_manager.model.Product;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Scanner;
 
 public class ProductRepository implements IProductRepository {
-    private static ArrayList<Products> productsList = new ArrayList<>();
+    private static ArrayList<Product> productsList = new ArrayList<>();
     Scanner scanner = new Scanner(System.in);
 
     static {
-        productsList.add(new Products(1, "a", 100));
-        productsList.add(new Products(2, "b", 200));
-        productsList.add(new Products(3, "c", 300));
-        productsList.add(new Products(4, "d", 400));
-        productsList.add(new Products(5, "e", 500));
+        productsList.add(new Product(1, "a", 100));
+        productsList.add(new Product(2, "b", 200));
+        productsList.add(new Product(3, "c", 300));
+        productsList.add(new Product(4, "d", 400));
+        productsList.add(new Product(5, "e", 500));
     }
 
     @Override
@@ -45,7 +44,7 @@ public class ProductRepository implements IProductRepository {
         System.out.println("Nhập giá: ");
         int prince = Integer.parseInt(scanner.nextLine());
         if (!name.equals(" ") && prince != 0) {
-            Products products = new Products(id, name, prince);
+            Product products = new Product(id, name, prince);
             productsList.add(products);
             System.out.println("Thêm thành công");
         } else {
@@ -61,7 +60,7 @@ public class ProductRepository implements IProductRepository {
             System.out.println("Nhập id của sản phẩm muốn sửa");
             inputId = Integer.parseInt(scanner.nextLine());
             if (checkId(inputId)) {
-                for (Products p : productsList) {
+                for (Product p : productsList) {
                     if (inputId == p.getId()) {
                         System.out.println("Nhập id mới");
                         p.setId(Integer.parseInt(scanner.nextLine()));
@@ -86,7 +85,7 @@ public class ProductRepository implements IProductRepository {
         int inputId = Integer.parseInt(scanner.nextLine());
         if (checkId(inputId)) {
             for (int i = 0; i < productsList.size(); i++) {
-                Products products = productsList.get(i);
+                Product products = productsList.get(i);
                 if (inputId == products.getId()) {
                     productsList.remove(products);
                     System.out.println("Xóa thành công");
@@ -105,7 +104,7 @@ public class ProductRepository implements IProductRepository {
 
     @Override
     public void sortDownProduct() {
-        productsList.sort(Products::compareTo);
+        productsList.sort(Product::compareTo);
     }
 
     @Override
@@ -113,7 +112,7 @@ public class ProductRepository implements IProductRepository {
         System.out.println("Nhập tên sản phẩm muốn tìm");
         String inputName = scanner.nextLine();
         boolean checkName = false;
-        Products products = null;
+        Product products = null;
         for (int i = 0; i < productsList.size(); i++) {
             if (inputName.equals(productsList.get(i).getProductName())) {
                 checkName = true;

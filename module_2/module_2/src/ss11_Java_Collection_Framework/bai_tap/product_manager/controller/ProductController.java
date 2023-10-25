@@ -3,7 +3,7 @@ package ss11_Java_Collection_Framework.bai_tap.product_manager.controller;
 import ss11_Java_Collection_Framework.bai_tap.product_manager.service.ProductService;
 
 public class ProductController {
-    ProductService productService = new ProductService();
+    private static ProductService productService = new ProductService();
 
     public void showProduct() {
         productService.showProduct();

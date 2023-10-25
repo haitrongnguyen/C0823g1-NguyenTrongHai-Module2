@@ -1,20 +1,20 @@
 package ss11_Java_Collection_Framework.bai_tap.product_manager;
 
-import ss11_Java_Collection_Framework.bai_tap.product_manager.model.Products;
+import ss11_Java_Collection_Framework.bai_tap.product_manager.model.Product;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
 public class ProductLinkedList {
-    private static List<Products> productsList = new LinkedList<>();
+    private static List<Product> productsList = new LinkedList<>();
 
     static {
-        Products product1 = new Products(1, "a", 100);
-        Products product2 = new Products(2, "b", 200);
-        Products product3 = new Products(3, "c", 300);
-        Products product4 = new Products(4, "d", 400);
-        Products product5 = new Products(5, "e", 500);
+        Product product1 = new Product(1, "a", 100);
+        Product product2 = new Product(2, "b", 200);
+        Product product3 = new Product(3, "c", 300);
+        Product product4 = new Product(4, "d", 400);
+        Product product5 = new Product(5, "e", 500);
         productsList.add(product1);
         productsList.add(product5);
         productsList.add(product3);
@@ -23,7 +23,7 @@ public class ProductLinkedList {
     Scanner scanner = new Scanner(System.in);
 
     public void displayList() {
-        for (Products products : productsList) {
+        for (Product products : productsList) {
             System.out.println(products);
         }
     }
@@ -37,7 +37,7 @@ public class ProductLinkedList {
             System.out.println("Nhập id");
             id = Integer.parseInt(scanner.nextLine());
             for (int i = 0; i < productsList.size(); i++) {
-                Products products = productsList.get(i);
+                Product products = productsList.get(i);
                 if (id == products.getId()) {
                     checkId = true;
                     System.out.println("Id trùng. Nhập lại");
@@ -52,7 +52,7 @@ public class ProductLinkedList {
                 price = Integer.parseInt(scanner.nextLine());
                 if (id > 0 && !name.equals(" ") && price > 0) {
                     System.out.println("Thêm thành công");
-                    productsList.add(new Products(id, name, price));
+                    productsList.add(new Product(id, name, price));
                 } else {
                     System.out.println("Thất bại, các trường k được để trống");
                 }
@@ -66,13 +66,13 @@ public class ProductLinkedList {
         int id;
         String name;
         int price;
-        Products product = null;
+        Product product = null;
         boolean checkId = false;
         do {
             System.out.println("Nhập id của sản phẩm muốn chỉnh sửa");
             id = Integer.parseInt(scanner.nextLine());
             for (int i = 0; i < productsList.size(); i++) {
-                Products products = productsList.get(i);
+                Product products = productsList.get(i);
                 if (id == products.getId()) {
                     checkId = true;
                     System.out.println("Nhập id mới");
@@ -96,7 +96,7 @@ public class ProductLinkedList {
         System.out.println("Nhập tên cần tìm kiếm");
         inputName = scanner.nextLine();
         for (int i = 0; i < productsList.size(); i++) {
-            Products products = productsList.get(i);
+            Product products = productsList.get(i);
             if (products.getProductName().equals(inputName)) {
                 checkName = true;
                 System.out.println("Tìm thấy: " + products);
@@ -110,11 +110,11 @@ public class ProductLinkedList {
     }
 
     public void sortUpProduct() {
-        productsList.sort(Products::compareTo);
+        productsList.sort(Product::compareTo);
     }
 
     public void sortDownProduct() {
-        productsList.sort(Products::compare);
+        productsList.sort(Product::compare);
     }
 
     public void deleteProduct() {
@@ -124,7 +124,7 @@ public class ProductLinkedList {
         System.out.println("Nhập id sản phẩm muốn xóa");
         id = Integer.parseInt(scanner.nextLine());
         for (int i = 0; i < productsList.size(); i++) {
-            Products products = productsList.get(i);
+            Product products = productsList.get(i);
             if (products.getId() == id) {
                 System.out.println("Xác nhận xóa " + products + " ấn yes, no để hủy");
                 choice = scanner.nextLine();

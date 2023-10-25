@@ -1,16 +1,14 @@
 package ss11_Java_Collection_Framework.bai_tap.product_manager.model;
 
-import java.util.Comparator;
-
-public class Products implements Comparable<Products> {
+public class Product implements Comparable<Product> {
     private int id;
     private String productName;
     private int price;
 
-    public Products() {
+    public Product() {
     }
 
-    public Products(int id, String productName, int price) {
+    public Product(int id, String productName, int price) {
         this.id = id;
         this.productName = productName;
         this.price = price;
@@ -48,10 +46,10 @@ public class Products implements Comparable<Products> {
     }
 
     @Override
-    public int compareTo(Products products) {
+    public int compareTo(Product products) {
         return Integer.compare(this.getPrice(),products.getPrice());
     }
-    public int compare(Products products){
+    public int compare(Product products){
         return Integer.compare(products.getPrice(),this.getPrice());
     }
 }
