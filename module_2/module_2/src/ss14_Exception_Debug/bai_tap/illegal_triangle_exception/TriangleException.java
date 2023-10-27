@@ -13,36 +13,36 @@ public class TriangleException {
 //            throw new IllegalTriangleException("Tổng hai cạnh phải lớn hơn cạnh còn lại");
 //        }
 //    }
-    private static void isInValidNumber(int a) throws IllegalTriangleException {
+    private static void checkInValidNumber(int a) throws IllegalTriangleException {
         if (a <= 0) {
             throw new IllegalTriangleException("Độ dài cạnh phải lớn hơn 0");
         }
     }
 
-    private static void isInValidLength(int a, int b, int c) throws IllegalTriangleException {
+    private static void checkInValidLength(int a, int b, int c) throws IllegalTriangleException {
         if (a + b <= c || a + c <= b || b + c <= a) {
             throw new IllegalTriangleException("Tổng hai cạnh phải lớn hơn cạnh còn lại");
-
         }
     }
 
     public static void main(String[] args) throws IllegalTriangleException {
+        Scanner scanner = new Scanner(System.in);
         try {
-            Scanner scanner = new Scanner(System.in);
             System.out.println("Nhập vào cạnh thứ nhất của tam giác");
             int a = Integer.parseInt(scanner.nextLine());
-            isInValidNumber(a);
+            checkInValidNumber(a);
             System.out.println("Nhập vào cạnh thứ hai của tam giác");
             int b = Integer.parseInt(scanner.nextLine());
-            isInValidNumber(b);
+            checkInValidNumber(b);
             System.out.println("Nhập vào cạnh thứ ba của tam giác");
             int c = Integer.parseInt(scanner.nextLine());
-            isInValidNumber(c);
-            isInValidLength(a, b, c);
-        } catch (IllegalTriangleException e) {
-            System.err.println(e.getMessage());
-        }catch (NumberFormatException e){
-            System.err.println("Bắt buộc là số");;
+            checkInValidNumber(c);
+            checkInValidLength(a, b, c);
+            System.out.println("Tam giác có ba cạnh là: " + a + "\t" + b + "\t" + c);
+        } catch (IllegalTriangleException ite) {
+            System.err.println(ite.getMessage());
+        } catch (NumberFormatException nfe) {
+            System.err.println("Bắt buộc là số");
         }
 
     }
