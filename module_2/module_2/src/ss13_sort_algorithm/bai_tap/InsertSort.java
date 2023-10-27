@@ -2,7 +2,7 @@ package ss13_sort_algorithm.bai_tap;
 
 import java.util.Arrays;
 
-public class insertSort {
+public class InsertSort {
     public static void main(String[] args) {
         int[] arr = {5, 1, 2, 7, 9, 6, 4, 3, 10};
         int pos;

@@ -2,7 +2,7 @@ package ss13_sort_algorithm.bai_tap;
 
 import java.util.Arrays;
 
-public class methodInsert {
+public class MethodInsert {
     private static void insertionSort(int[] list) {
         int x;
         int pos;
