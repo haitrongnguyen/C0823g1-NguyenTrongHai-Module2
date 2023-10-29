@@ -39,9 +39,9 @@ public class TriangleException {
             checkInValidNumber(c);
             checkInValidLength(a, b, c);
             System.out.println("Tam giác có ba cạnh là: " + a + "\t" + b + "\t" + c);
-        } catch (IllegalTriangleException ite) {
-            System.err.println(ite.getMessage());
-        } catch (NumberFormatException nfe) {
+        } catch (IllegalTriangleException i) {
+            System.err.println(i.getMessage());
+        } catch (NumberFormatException n) {
             System.err.println("Bắt buộc là số");
         }
 
