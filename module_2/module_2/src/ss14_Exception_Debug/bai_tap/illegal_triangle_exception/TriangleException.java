@@ -27,23 +27,29 @@ public class TriangleException {
 
     public static void main(String[] args) throws IllegalTriangleException {
         Scanner scanner = new Scanner(System.in);
-        try {
-            System.out.println("Nhập vào cạnh thứ nhất của tam giác");
-            int a = Integer.parseInt(scanner.nextLine());
-            checkInValidNumber(a);
-            System.out.println("Nhập vào cạnh thứ hai của tam giác");
-            int b = Integer.parseInt(scanner.nextLine());
-            checkInValidNumber(b);
-            System.out.println("Nhập vào cạnh thứ ba của tam giác");
-            int c = Integer.parseInt(scanner.nextLine());
-            checkInValidNumber(c);
-            checkInValidLength(a, b, c);
-            System.out.println("Tam giác có ba cạnh là: " + a + "\t" + b + "\t" + c);
-        } catch (IllegalTriangleException i) {
-            System.err.println(i.getMessage());
-        } catch (NumberFormatException n) {
-            System.err.println("Bắt buộc là số");
-        }
+        boolean checkValue;
+        do {
+            checkValue = true;
+            try {
+                System.out.println("Nhập vào cạnh thứ nhất của tam giác");
+                int a = Integer.parseInt(scanner.nextLine());
+                checkInValidNumber(a);
+                System.out.println("Nhập vào cạnh thứ hai của tam giác");
+                int b = Integer.parseInt(scanner.nextLine());
+                checkInValidNumber(b);
+                System.out.println("Nhập vào cạnh thứ ba của tam giác");
+                int c = Integer.parseInt(scanner.nextLine());
+                checkInValidNumber(c);
+                checkInValidLength(a, b, c);
+                System.out.println("Tam giác có ba cạnh là: " + a + "\t" + b + "\t" + c);
+            } catch (IllegalTriangleException i) {
+                System.err.println(i.getMessage());
+                checkValue = false;
+            } catch (NumberFormatException n) {
+                System.err.println("Bắt buộc là số");
+                checkValue = false;
+            }
+        } while (!checkValue);
 
     }
 }
