@@ -7,12 +7,12 @@ import java.io.IOException;
 import java.util.List;
 
 public class Writer {
-    public static void writeFile(List<String> list,String path){
+    public static void writeFile(List<String> list, String path) {
         File file = new File(path);
         try {
             FileWriter fileWriter = new FileWriter(path);
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-            for (String s: list){
+            for (String s : list) {
                 bufferedWriter.write(s);
                 bufferedWriter.newLine();
                 bufferedWriter.flush();

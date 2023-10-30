@@ -5,21 +5,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ReadFile {
-    public static List<String> readFile(String path){
+    public static List<String> readFile(String path) throws IOException {
         List<String> list = new ArrayList<>();
         File file = new File(path);
+        BufferedReader bufferedReader = null;
         try {
             FileReader fileReader = new FileReader(file);
-            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            bufferedReader = new BufferedReader(fileReader);
             String line = null;
-            while ((line = bufferedReader.readLine())!=null){
+            while ((line = bufferedReader.readLine()) != null) {
                 list.add(line);
             }
-            bufferedReader.close();
-        }catch(FileNotFoundException e) {
-            throw new RuntimeException(e);
         } catch (IOException e) {
             throw new RuntimeException(e);
+        } finally {
+            bufferedReader.close();
         }
         return list;
     }
