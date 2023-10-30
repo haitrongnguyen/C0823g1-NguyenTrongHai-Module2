@@ -28,17 +28,20 @@ public class TriangleException {
     public static void main(String[] args) throws IllegalTriangleException {
         Scanner scanner = new Scanner(System.in);
         boolean checkValue;
+        int a;
+        int b;
+        int c;
         do {
             checkValue = true;
             try {
                 System.out.println("Nhập vào cạnh thứ nhất của tam giác");
-                int a = Integer.parseInt(scanner.nextLine());
+                a = Integer.parseInt(scanner.nextLine());
                 checkInValidNumber(a);
                 System.out.println("Nhập vào cạnh thứ hai của tam giác");
-                int b = Integer.parseInt(scanner.nextLine());
+                b = Integer.parseInt(scanner.nextLine());
                 checkInValidNumber(b);
                 System.out.println("Nhập vào cạnh thứ ba của tam giác");
-                int c = Integer.parseInt(scanner.nextLine());
+                c = Integer.parseInt(scanner.nextLine());
                 checkInValidNumber(c);
                 checkInValidLength(a, b, c);
                 System.out.println("Tam giác có ba cạnh là: " + a + "\t" + b + "\t" + c);
