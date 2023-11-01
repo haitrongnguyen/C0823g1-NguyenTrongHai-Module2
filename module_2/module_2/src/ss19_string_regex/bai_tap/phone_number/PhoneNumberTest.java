@@ -9,7 +9,7 @@ public class PhoneNumberTest {
         boolean checkPhoneNumber;
         for (String s : strings) {
             checkPhoneNumber = phoneNumber.checkPhoneNumber(s);
-            System.out.println("Số điện thoại: " + s + " hợp lệ: " + checkPhoneNumber);
+            System.out.println("Phone number: " + s + " is valid: " + checkPhoneNumber);
         }
     }
 }
