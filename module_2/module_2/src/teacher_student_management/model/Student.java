@@ -7,8 +7,14 @@ public class Student extends Person {
     public Student() {
     }
 
-    public Student(String code, String name, String dayOfBirth, String gender, String className, double score) {
+    public Student(Integer code, String name, String dayOfBirth, String gender, String className, double score) {
         super(code, name, dayOfBirth, gender);
+        this.className = className;
+        this.score = score;
+    }
+
+    public Student(String name, String day, String gender, String className, Integer score) {
+        super(name,day,gender);
         this.className = className;
         this.score = score;
     }
@@ -31,10 +37,9 @@ public class Student extends Person {
 
     @Override
     public String toString() {
-        return "Student{" +
+        return "Học sinh: " +
                 super.toString()+
-                "className='" + className + '\'' +
-                ", score=" + score +
-                '}';
+                ", className: " + className +
+                ", score: " + score;
     }
 }

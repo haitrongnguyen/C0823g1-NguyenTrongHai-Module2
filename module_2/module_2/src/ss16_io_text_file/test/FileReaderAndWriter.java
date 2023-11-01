@@ -1,4 +1,4 @@
-package ss16_io_text_file.bai_tap;
+package ss16_io_text_file.test;
 
 import java.io.*;
 import java.util.ArrayList;

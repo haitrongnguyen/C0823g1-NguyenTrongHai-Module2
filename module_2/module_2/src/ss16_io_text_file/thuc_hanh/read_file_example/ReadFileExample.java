@@ -1,4 +1,4 @@
-package ss16_io_text_file.thuc_hanh;
+package ss16_io_text_file.thuc_hanh.read_file_example;
 
 import java.io.*;
 import java.util.ArrayList;

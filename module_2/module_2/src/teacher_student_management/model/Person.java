@@ -1,7 +1,7 @@
 package teacher_student_management.model;
 
 public abstract class Person {
-    private String code;
+    private Integer code;
     private String name;
     private String dayOfBirth;
     private String gender;
@@ -9,18 +9,24 @@ public abstract class Person {
     public Person() {
     }
 
-    public Person(String code, String name, String dayOfBirth, String gender) {
+    public Person(Integer code, String name, String dayOfBirth, String gender) {
         this.code = code;
         this.name = name;
         this.dayOfBirth = dayOfBirth;
         this.gender = gender;
     }
 
-    public String getCode() {
+    public Person(String name, String dayOfBirth, String gender) {
+        this.name = name;
+        this.dayOfBirth = dayOfBirth;
+        this.gender = gender;
+    }
+
+    public Integer getCode() {
         return code;
     }
 
-    public void setCode(String code) {
+    public void setCode(Integer code) {
         this.code = code;
     }
 
@@ -50,9 +56,9 @@ public abstract class Person {
 
     @Override
     public String toString() {
-        return "code='" + code + '\'' +
-                ", name='" + name + '\'' +
-                ", dayOfBirth='" + dayOfBirth + '\'' +
-                ", gender='" + gender + '\'' ;
+        return "code: " + code+
+                ", name: '" + name+
+                ", dayOfBirth: " + dayOfBirth+
+                ", gender: " + gender;
     }
 }

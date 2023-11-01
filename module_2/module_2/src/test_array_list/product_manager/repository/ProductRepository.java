@@ -1,4 +1,4 @@
-package ss11_Java_Collection_Framework.bai_tap.product_manager.repository;
+package test_array_list.product_manager.repository;
 
 import ss11_Java_Collection_Framework.bai_tap.product_manager.model.Product;
 
@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
 
-public class ProductRepository implements IProductRepository {
+public class ProductRepository implements IProductRepository{
     private static ArrayList<Product> productsList = new ArrayList<>();
     Scanner scanner = new Scanner(System.in);
 
@@ -99,7 +99,7 @@ public class ProductRepository implements IProductRepository {
 
     @Override
     public void sortUpProduct() {
-        Collections.sort(productsList, new SortProduct());
+        Collections.sort(productsList, new ss11_Java_Collection_Framework.bai_tap.product_manager.repository.SortProduct());
     }
 
     @Override

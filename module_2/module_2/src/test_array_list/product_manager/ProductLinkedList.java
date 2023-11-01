@@ -1,4 +1,4 @@
-package ss11_Java_Collection_Framework.bai_tap.product_manager;
+package test_array_list.product_manager;
 
 import ss11_Java_Collection_Framework.bai_tap.product_manager.model.Product;
 

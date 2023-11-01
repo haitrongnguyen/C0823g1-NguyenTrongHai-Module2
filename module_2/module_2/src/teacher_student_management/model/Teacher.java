@@ -3,11 +3,13 @@ package teacher_student_management.model;
 public class Teacher extends Person{
     private String level;
 
-    public Teacher() {
-    }
 
-    public Teacher(String code, String name, String dayOfBirth, String gender, String level) {
+    public Teacher(Integer code, String name, String dayOfBirth, String gender, String level) {
         super(code, name, dayOfBirth, gender);
+        this.level = level;
+    }
+    public Teacher(String name, String dayOfBirth, String gender, String level){
+        super(name,dayOfBirth,gender);
         this.level = level;
     }
 
@@ -21,9 +23,8 @@ public class Teacher extends Person{
 
     @Override
     public String toString() {
-        return "Teacher{" +
+        return "Giảng viên: " +
                 super.toString()+
-                "level='" + level + '\'' +
-                '}';
+                ", level=" + level;
     }
 }
