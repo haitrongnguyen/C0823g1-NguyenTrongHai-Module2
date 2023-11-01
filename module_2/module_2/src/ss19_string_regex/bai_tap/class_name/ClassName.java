@@ -4,16 +4,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ClassName {
-
-    private final Pattern pattern;
+    private static final String NAME_REGEX = "^[CAP]\\d{4}[GHIK]$";
 
     public boolean checkName(String str) {
+        Pattern pattern = Pattern.compile(NAME_REGEX);
         Matcher matcher = pattern.matcher(str);
         return matcher.matches();
-    }
-
-    public ClassName() {
-        String CLASS_NAME = "^[CAP]\\d{4}[GHIK]$";
-        pattern = Pattern.compile(CLASS_NAME);
     }
 }
