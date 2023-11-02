@@ -98,6 +98,9 @@ public class FuramaResortView {
             case 1:
                 displayListFacility();
                 break;
+            case 2:
+//                addNewFacility();
+                break;
         }
     }
 
