@@ -15,6 +15,12 @@ public class Customer extends Person{
         this.address = address;
     }
 
+    public Customer(String name, String date, String gender, String idCard, String phoneNumber, String email, String styleCustomer, String address) {
+        super(name,date,gender,idCard,phoneNumber,email);
+        this.styleCustomer = styleCustomer;
+        this.address = address;
+    }
+
     public String getStyleCustomer() {
         return styleCustomer;
     }
@@ -32,5 +38,12 @@ public class Customer extends Person{
     }
     public void booking(String codeBooking){
 
+    }
+
+    @Override
+    public String toString() {
+        return  super.toString()+
+                ", styleCustomer: " + styleCustomer +
+                ", address: " + address;
     }
 }

@@ -1,5 +1,6 @@
 package furama_resort.controllers;
 
+import furama_resort.models.person.Customer;
 import furama_resort.models.person.Employee;
 import furama_resort.services.IEmployeeService;
 import furama_resort.services.impl.EmployeeService;
@@ -33,4 +34,6 @@ public class EmployController {
     public List<Employee> searchByName(String name) {
         return employeeService.searchByName(name);
     }
+
+
 }

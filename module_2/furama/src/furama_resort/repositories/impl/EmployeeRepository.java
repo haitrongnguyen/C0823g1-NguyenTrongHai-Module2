@@ -2,8 +2,8 @@ package furama_resort.repositories.impl;
 
 import furama_resort.models.person.Employee;
 import furama_resort.repositories.IEmployeeRepository;
-import furama_resort.utils.read_and_write.Read;
-import furama_resort.utils.read_and_write.Write;
+import furama_resort.utils.read_and_write.employee.EmployeeReader;
+import furama_resort.utils.read_and_write.employee.EmployeeWriter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,18 +13,23 @@ public class EmployeeRepository implements IEmployeeRepository {
     private static List<Employee> employees;
     @Override
     public void saveEmployee(Employee employee) {
-        employees.add(employee);
-        Write.write(EMPLOYEE_PATH,employees);
+        try {
+            employees = EmployeeReader.read(EMPLOYEE_PATH);
+            employees.add(employee);
+        }catch (NullPointerException e){
+            System.out.println(e.getMessage());
+        }
+        EmployeeWriter.write(EMPLOYEE_PATH,employees);
     }
 
     @Override
     public List<Employee> getAll() {
-        return Read.read(EMPLOYEE_PATH);
+        return EmployeeReader.read(EMPLOYEE_PATH);
     }
 
     @Override
     public boolean findCode(String code) {
-        employees = Read.read(EMPLOYEE_PATH);
+        employees = EmployeeReader.read(EMPLOYEE_PATH);
         for (Employee employee: employees){
             if (employee.getCode().equals(code)){
                 return true;
@@ -35,7 +40,7 @@ public class EmployeeRepository implements IEmployeeRepository {
 
     @Override
     public void editEmployee(Employee employee) {
-        employees = Read.read(EMPLOYEE_PATH);
+        employees = EmployeeReader.read(EMPLOYEE_PATH);
         for (Employee employee1: employees){
             if (employee1.getCode().equals(employee.getCode())){
                 employee1.setName(employee.getName());
@@ -49,24 +54,24 @@ public class EmployeeRepository implements IEmployeeRepository {
                 employee1.setWage(employee.getWage());
             }
         }
-        Write.write(EMPLOYEE_PATH,employees);
+        EmployeeWriter.write(EMPLOYEE_PATH,employees);
     }
 
     @Override
     public void removeEmployee(String code) {
-        employees = Read.read(EMPLOYEE_PATH);
+        employees = EmployeeReader.read(EMPLOYEE_PATH);
         for (Employee employee: employees){
             if (employee.getCode().equals(code)){
                 employees.remove(employee);
                 break;
             }
         }
-        Write.write(EMPLOYEE_PATH,employees);
+        EmployeeWriter.write(EMPLOYEE_PATH,employees);
     }
 
     @Override
     public List<Employee> searchByName(String name) {
-        employees = Read.read(EMPLOYEE_PATH);
+        employees = EmployeeReader.read(EMPLOYEE_PATH);
         List<Employee> list = new ArrayList<>();
         String employeeName;
         for (Employee employee: employees){

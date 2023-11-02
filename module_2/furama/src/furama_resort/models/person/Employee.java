@@ -3,14 +3,14 @@ package furama_resort.models.person;
 public class Employee extends Person {
     private String level;
     private String location;
-    private String wage;
+    private Long wage;
     public Employee(){
     }
 
     public Employee(String code, String name, String dateOfBirth,
                     String gender, String idCard,
                     String phoneNumber, String email,
-                    String level, String location, String wage) {
+                    String level, String location, Long wage) {
         super(code, name, dateOfBirth, gender, idCard, phoneNumber, email);
         this.level = level;
         this.location = location;
@@ -20,7 +20,7 @@ public class Employee extends Person {
     public Employee(String name, String dateOfBirth,
                     String gender, String idCard, String phoneNumber,
                     String email, String level, String location,
-                    String wage) {
+                    Long wage) {
         super(name,dateOfBirth,gender,idCard,phoneNumber,email);
         this.level = level;
         this.location = location;
@@ -44,11 +44,11 @@ public class Employee extends Person {
         this.location = location;
     }
 
-    public String getWage() {
+    public Long getWage() {
         return wage;
     }
 
-    public void setWage(String wage) {
+    public void setWage(Long wage) {
         this.wage = wage;
     }
 
