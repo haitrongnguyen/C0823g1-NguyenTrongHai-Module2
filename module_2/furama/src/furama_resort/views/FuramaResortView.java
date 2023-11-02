@@ -2,6 +2,8 @@ package furama_resort.views;
 
 import furama_resort.controllers.CustomerController;
 import furama_resort.controllers.EmployController;
+import furama_resort.controllers.FacilityController;
+import furama_resort.models.facility.Facility;
 import furama_resort.models.person.Customer;
 import furama_resort.models.person.Employee;
 import furama_resort.utils.exception.NumberFormat;
@@ -15,6 +17,7 @@ public class FuramaResortView {
     private static int choice;
     private static EmployController employController = new EmployController();
     private static CustomerController customerController = new CustomerController();
+    private static FacilityController facilityController = new FacilityController();
     private static List<Employee> employeeList;
     private static String code;
     private static boolean findCode;
@@ -22,43 +25,43 @@ public class FuramaResortView {
     private static Customer customer;
 
     public static void main(String[] args) {
-        do {
             displayMainMenu();
-        } while (true);
     }
 
     private static void displayMainMenu() {
-        System.out.println("-------Menu--------\n" +
-                "1. Employee Management\n" +
-                "2. Customer Management\n" +
-                "3. Facility Management\n" +
-                "4. Booking Management\n" +
-                "5. Promotion Management\n" +
-                "6. Exit");
-        System.out.println("Chọn chức năng: ");
-        choice = NumberFormat.checkChoice(choice);
-        switch (choice) {
-            case 1:
-                displayEmployMenu();
-                break;
-            case 2:
-                displayCustomerMenu();
-                break;
-            case 3:
-                displayFacilityMenu();
-                break;
-            case 4:
-                displayBookingMenu();
-                break;
-            case 5:
-                displayPromotionMenu();
-                break;
-            case 6:
-                System.out.println("Bye bye");
-                System.exit(0);
-            default:
-                System.out.println("Lựa chọn không đúng");
-        }
+        do {
+            System.out.println("-------Menu--------\n" +
+                    "1. Employee Management\n" +
+                    "2. Customer Management\n" +
+                    "3. Facility Management\n" +
+                    "4. Booking Management\n" +
+                    "5. Promotion Management\n" +
+                    "6. Exit");
+            System.out.println("Chọn chức năng: ");
+            choice = NumberFormat.checkChoice(choice);
+            switch (choice) {
+                case 1:
+                    displayEmployMenu();
+                    break;
+                case 2:
+                    displayCustomerMenu();
+                    break;
+                case 3:
+                    displayFacilityMenu();
+                    break;
+                case 4:
+                    displayBookingMenu();
+                    break;
+                case 5:
+                    displayPromotionMenu();
+                    break;
+                case 6:
+                    System.out.println("Bye bye");
+                    System.exit(0);
+                default:
+                    System.out.println("Lựa chọn không đúng");
+            }
+        } while (true);
     }
 
     private static void displayPromotionMenu() {
@@ -89,15 +92,15 @@ public class FuramaResortView {
                 "5. Return main menu");
         System.out.println("Chọn chức năng: ");
         choice = NumberFormat.checkChoice(choice);
-        switch (choice){
+        switch (choice) {
             case 1:
-                displayFistFacility();
+                displayListFacility();
                 break;
         }
     }
 
-    private static void displayFistFacility() {
-        
+    private static void displayListFacility() {
+        List<Facility> facilityList = facilityController.getAll();
     }
 
     private static void displayCustomerMenu() {
@@ -138,9 +141,9 @@ public class FuramaResortView {
         System.out.println("Nhập tên khách hàng muốn tìm");
         String name = scanner.nextLine();
         List<Customer> customerList = customerController.searchByNameCustomer(name);
-        if (customerList.isEmpty()){
+        if (customerList.isEmpty()) {
             System.out.println("Không có khách hàng nào tương tự");
-        }else {
+        } else {
             for (Customer customer1 : customerList) {
                 System.out.println(customer1);
             }
@@ -376,7 +379,6 @@ public class FuramaResortView {
     // Mã nhân viên, Họ tên, Ngày sinh, Giới tính,
 //    Số CMND, Số Điện Thoại, Email, Trình độ, Vị trí, lương
     private static void addNewEmployee() {
-        Employee employee;
         do {
             code = inputCodeEmployee();
             findCode = findCode(code);
