@@ -81,6 +81,8 @@ public class FuramaResortView {
                 "4. Display list contracts\n" +
                 "5. Edit contracts\n" +
                 "6. Return main menu");
+        System.out.println("Chọn chức năng: ");
+        choice = NumberFormat.checkChoice(choice);
     }
 
     private static void displayFacilityMenu() {
@@ -415,9 +417,9 @@ public class FuramaResortView {
         System.out.println("Nhập email");
         String email = scanner.nextLine();
         System.out.println("Chọn trình độ");
-        String level = selecLevel();
+        String level = selectLevel();
         System.out.println("Vị trí");
-        String location = selecLocation();
+        String location = selectLocation();
         System.out.println("Nhập lương");
         Long wage = inputWage();
         return new Employee(name, dateOfBirth, gender, idCard, phoneNumber,
@@ -478,7 +480,7 @@ public class FuramaResortView {
         return wage;
     }
 
-    private static String selecLocation() {
+    private static String selectLocation() {
         String location = null;
         System.out.println("1. Lễ tân\n" +
                 "2. Phục vụ\n" +
@@ -512,7 +514,7 @@ public class FuramaResortView {
         return location;
     }
 
-    private static String selecLevel() {
+    private static String selectLevel() {
         String level = null;
         System.out.println("1. Trung cấp\n" +
                 "2. Cao Đẳng\n" +
