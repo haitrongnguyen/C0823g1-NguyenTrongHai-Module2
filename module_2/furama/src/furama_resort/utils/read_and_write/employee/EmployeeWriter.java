@@ -16,9 +16,6 @@ public class EmployeeWriter {
             File file = new File(path);
             fileWriter = new FileWriter(file);
             bufferedWriter = new BufferedWriter(fileWriter);
-//            if (list == null){
-//
-//            }
             for (Employee employee: list){
                 bufferedWriter.write(employee.getCode()+","+ employee.getName()+","+employee.getDateOfBirth()+","+
                         employee.getGender()+","+employee.getIdCard()+","+ employee.getPhoneNumber()+","+

@@ -4,12 +4,12 @@ import furama_resort.models.facility.Facility;
 
 public class House extends Facility {
     private String roomStandards;
-    private int numberOfFloor;
+    private Integer numberOfFloor;
     public House(){
     }
-    public House(String serviceCode, String serviceName, String usableArea, String rentalCosts,
-                 int maximumPeople, String rentalType,String roomStandards,
-                 int numberOfFloor){
+    public House(String serviceCode, String serviceName, Double usableArea, Long rentalCosts,
+                 Integer maximumPeople, String rentalType,String roomStandards,
+                 Integer numberOfFloor){
         super(serviceCode,serviceName,usableArea,rentalCosts,maximumPeople,rentalType);
         this.roomStandards = roomStandards;
         this.numberOfFloor = numberOfFloor;
@@ -23,11 +23,19 @@ public class House extends Facility {
         this.roomStandards = roomStandards;
     }
 
-    public int getNumberOfFloor() {
+    public Integer getNumberOfFloor() {
         return numberOfFloor;
     }
 
-    public void setNumberOfFloor(int numberOfFloor) {
+    public void setNumberOfFloor(Integer numberOfFloor) {
         this.numberOfFloor = numberOfFloor;
+    }
+
+    @Override
+    public String toString() {
+        return "House{" + super.toString()+
+                "roomStandards='" + roomStandards + '\'' +
+                ", numberOfFloor=" + numberOfFloor +
+                '}';
     }
 }
