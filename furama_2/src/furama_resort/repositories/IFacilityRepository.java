@@ -6,10 +6,11 @@ import furama_resort.models.facility.Room;
 import furama_resort.models.facility.Villa;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public interface IFacilityRepository {
-    List<Facility> getAll();
+    Map<Facility,Integer> getAll();
 
     boolean checkExist(String code);
 
@@ -20,6 +21,8 @@ public interface IFacilityRepository {
     void addNewVilla(Villa villa1);
 
     void removeFacility(String code);
+
+    List<Facility> getMaintenance();
 
 //    Set<Facility> getAllMap();
 }

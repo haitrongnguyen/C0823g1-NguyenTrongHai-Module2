@@ -36,4 +36,7 @@ public class EmployController {
     }
 
 
+    public Employee getEmployee(String code) {
+        return employeeService.getEmployee(code);
+    }
 }

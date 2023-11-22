@@ -39,4 +39,9 @@ public class EmployeeService implements IEmployeeService {
     public List<Employee> searchByName(String name) {
         return employeeRepository.searchByName(name);
     }
+
+    @Override
+    public Employee getEmployee(String code) {
+        return employeeRepository.getEmployee(code);
+    }
 }

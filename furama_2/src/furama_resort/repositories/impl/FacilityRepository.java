@@ -10,31 +10,32 @@ import furama_resort.utils.read_and_write.facility.FacilityWriteToFile;
 
 import java.util.*;
 
-public class FacilityRepository implements IFacilityRepository {
-    private static final String FACILITY_LIST = "src/furama_resort/data/facility.csv";
-    private static Map<Facility,Integer> facilityMap;
-    private static int count;
 
-//    public static void setFacilityMap(Map<Facility, Integer> facilityMap) {
-//        FacilityRepository.facilityMap = facilityMap;
-//    }
+
+public class FacilityRepository implements IFacilityRepository {
+    private static final String FACILITY_LIST = "src/furama_resort/data/facility_2.csv";
+    private static Map<Facility, Integer> facilityMap = FacilityReadFile.readFacility(FACILITY_LIST);
+
+    public static void setValue(String serviceCode) {
+        Map<Facility,Integer> map = FacilityReadFile.readFacility(FACILITY_LIST);
+        for (Map.Entry<Facility,Integer> entry: map.entrySet()){
+            if (entry.getKey().getServiceCode().equals(serviceCode)){
+                map.put(entry.getKey(), map.getOrDefault(entry.getKey(),0)+1);
+            }
+        }
+        FacilityWriteToFile.writeToFile(FACILITY_LIST,map);
+    }
 
     @Override
-    public List<Facility> getAll() {
+    public Map<Facility, Integer> getAll() {
         return FacilityReadFile.readFacility(FACILITY_LIST);
     }
 
     @Override
     public boolean checkExist(String code) {
-        List<Facility> facilityList = FacilityReadFile.readFacility(FACILITY_LIST);
-//        Set<Facility> facilitySet = facilityMap.keySet();
-//        for (Facility facility1:facilitySet){
-//            if (facility1.getServiceCode().equals(code)){
-//                return true;
-//            }
-//        }
-        for (Facility facility: facilityList){
-            if (facility.getServiceCode().equals(code)){
+        Set<Facility> facilitySet = facilityMap.keySet();
+        for (Facility facility1 : facilitySet) {
+            if (facility1.getServiceCode().equals(code)) {
                 return true;
             }
         }
@@ -43,49 +44,42 @@ public class FacilityRepository implements IFacilityRepository {
 
     @Override
     public void addNewRoom(Room room1) {
-        List<Facility> facilityList = FacilityReadFile.readFacility(FACILITY_LIST);
-//        facilityMap.put(room1,count);
-        facilityList.add(room1);
-        FacilityWriteToFile.writeToFile(FACILITY_LIST,facilityList);
+        facilityMap.put(room1, facilityMap.getOrDefault(room1,-1)+1);
+        FacilityWriteToFile.writeToFile(FACILITY_LIST, facilityMap);
     }
 
     @Override
     public void addNewHouse(House house1) {
-        List<Facility> facilityList = FacilityReadFile.readFacility(FACILITY_LIST);
-        facilityList.add(house1);
-//        facilityMap.put(house1,count);
-        FacilityWriteToFile.writeToFile(FACILITY_LIST,facilityList);
+        facilityMap.put(house1, facilityMap.getOrDefault(house1,-1)+1);
+        FacilityWriteToFile.writeToFile(FACILITY_LIST, facilityMap);
     }
 
     @Override
     public void addNewVilla(Villa villa1) {
-        List<Facility> facilityList = FacilityReadFile.readFacility(FACILITY_LIST);
-        facilityList.add(villa1);
-//        facilityMap.put(villa1,count);
-        FacilityWriteToFile.writeToFile(FACILITY_LIST,facilityList);
+        facilityMap.put(villa1, facilityMap.getOrDefault(villa1,-1)+1);
+        FacilityWriteToFile.writeToFile(FACILITY_LIST, facilityMap);
     }
 
     @Override
     public void removeFacility(String code) {
-        List<Facility> facilityList = FacilityReadFile.readFacility(FACILITY_LIST);
-//        Set<Facility> facilitySet = facilityMap.keySet();
-//        for (Facility facility1: facilitySet){
-//            if (facility1.getServiceCode().equals(code)){
-//                facilitySet.remove(facility1);
-//                break;
-//            }
-//        }
-        for (Facility facility: facilityList){
-            if (facility.getServiceCode().equals(code)){
-                facilityList.remove(facility);
+        Set<Facility> facilitySet = facilityMap.keySet();
+        for (Facility facility1 : facilitySet) {
+            if (facility1.getServiceCode().equals(code)) {
+                facilitySet.remove(facility1);
                 break;
             }
         }
-        FacilityWriteToFile.writeToFile(FACILITY_LIST,facilityList);
+        FacilityWriteToFile.writeToFile(FACILITY_LIST, facilityMap);
     }
 
-//    @Override
-//    public Set<Facility> getAllMap() {
-//        return facilityMap.keySet();
-//    }
+    @Override
+    public List<Facility> getMaintenance() {
+        List<Facility> facilityList = new ArrayList<>();
+        for (Map.Entry<Facility,Integer> entry: facilityMap.entrySet()){
+            if (entry.getValue() == 5){
+                facilityList.add(entry.getKey());
+            }
+        }
+        return facilityList;
+    }
 }

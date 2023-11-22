@@ -16,4 +16,6 @@ public interface IEmployeeRepository {
     void removeEmployee(String code);
 
     List<Employee> searchByName(String name);
+
+    Employee getEmployee(String code);
 }

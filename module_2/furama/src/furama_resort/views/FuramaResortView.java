@@ -174,13 +174,11 @@ public class FuramaResortView {
         Facility villa = inputInformationFacility();
         villa.setServiceCode(code);
         System.out.println("Nhập tiêu chuẩn phòng");
-        String roomStandards = scanner.nextLine();
+        String roomStandards = checkName();
         System.out.println("Nhập số tầng");
         Integer numberOfFloor = inputNumberOfFloor();
         System.out.println("Nhập diện tích hồ bơi");
         double poolArea = checkArea();
-//        room.getServiceCode(),room.getServiceName(),room.getUsableArea(),room.getRentalCosts(),room.getMaximumPeople(),
-//                room.getRentalType(),freeService
         Villa villa1 = new Villa(villa.getServiceCode(),villa.getServiceName(),villa.getUsableArea(),villa.getRentalCosts(),
                 villa.getMaximumPeople(),villa.getRentalType(),roomStandards,poolArea,numberOfFloor);
         facilityController.addNewVilla(villa1);

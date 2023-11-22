@@ -43,7 +43,7 @@ public class Customer extends Person{
     @Override
     public String toString() {
         return  super.toString()+
-                ", styleCustomer: " + styleCustomer +
-                ", address: " + address;
+                "| Kiểu khách hàng : " + styleCustomer +
+                "| Địa chỉ: " + address;
     }
 }

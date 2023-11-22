@@ -8,11 +8,12 @@ import furama_resort.services.IFacilityService;
 import furama_resort.services.impl.FacilityService;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public class FacilityController {
     private static IFacilityService facilityService = new FacilityService();
-    public List<Facility> getAll() {
+    public Map<Facility,Integer> getAll() {
        return facilityService.getAll();
     }
 
@@ -34,6 +35,10 @@ public class FacilityController {
 
     public void removeFacility(String code) {
         facilityService.removeFacility(code);
+    }
+
+    public List<Facility> getMaintenance() {
+        return facilityService.getMaintenance();
     }
 
 

@@ -1,2 +1,6 @@
-package student_manager.repositories;public class IRepository {
+package student_manager.repositories;
+
+public interface IRepository
+{
+    boolean checkCode(String code);
 }

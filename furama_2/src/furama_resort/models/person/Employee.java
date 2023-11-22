@@ -54,10 +54,9 @@ public class Employee extends Person {
 
     @Override
     public String toString() {
-        return "(Employee) "+super.toString()+
-                "level: " + level+
-                ", location: " + location+
-                ", wage: " + wage +
-                '}';
+        return "Nhân viên "+super.toString()+
+                "| Trình độ: " + level+
+                "| Vị trí: " + location+
+                "| Lương: " + wage;
     }
 }

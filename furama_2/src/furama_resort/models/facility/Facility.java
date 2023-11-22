@@ -79,11 +79,11 @@ public class Facility {
 
     @Override
     public String toString() {
-        return  "serviceCode='" + serviceCode +
-                ", serviceName='" + serviceName +
-                ", usableArea=" + usableArea +
-                ", rentalCosts=" + rentalCosts +
-                ", maximumPeople=" + maximumPeople+
-                ", rentalType='" + rentalType;
+        return  " serviceCode: " + serviceCode +
+                ", serviceName: " + serviceName +
+                ", usableArea: " + usableArea +
+                ", rentalCosts: " + rentalCosts +
+                ", maximumPeople: " + maximumPeople+
+                ", rentalType: " + rentalType;
     }
 }

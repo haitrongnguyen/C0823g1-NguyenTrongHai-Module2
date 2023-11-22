@@ -9,12 +9,13 @@ import furama_resort.repositories.impl.FacilityRepository;
 import furama_resort.services.IFacilityService;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public class FacilityService implements IFacilityService {
     private static IFacilityRepository facilityRepository = new FacilityRepository();
     @Override
-    public List<Facility> getAll() {
+    public Map<Facility,Integer> getAll() {
         return facilityRepository.getAll();
     }
 
@@ -41,6 +42,11 @@ public class FacilityService implements IFacilityService {
     @Override
     public void removeFacility(String code) {
         facilityRepository.removeFacility(code);
+    }
+
+    @Override
+    public List<Facility> getMaintenance() {
+        return facilityRepository.getMaintenance();
     }
 
 //    @Override

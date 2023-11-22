@@ -82,4 +82,15 @@ public class EmployeeRepository implements IEmployeeRepository {
         }
         return list;
     }
+
+    @Override
+    public Employee getEmployee(String code) {
+        employees = EmployeeReader.read(EMPLOYEE_PATH);
+        for (Employee employee: employees){
+            if (employee.getCode().equals(code)){
+                return employee;
+            }
+        }
+        return null;
+    }
 }

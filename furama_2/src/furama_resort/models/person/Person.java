@@ -1,7 +1,7 @@
 package furama_resort.models.person;
 
 public abstract class Person {
-    public String code;
+    private String code;
     private String name;
     private String dateOfBirth;
     private String gender;
@@ -89,12 +89,12 @@ public abstract class Person {
 
     @Override
     public String toString() {
-        return "code: " + code +
-                ", name: " + name +
-                ", dateOfBirth: " + dateOfBirth +
-                ", gender: " + gender +
-                ", idCard: " + idCard +
-                ", phoneNumber: " + phoneNumber +
-                ", email: " + email;
+        return  "| Mã số: " + code +
+                "| Tên: " + name +
+                "| Ngày sinh: " + dateOfBirth +
+                "| Giới tính: " + gender +
+                "| CMND số: " + idCard +
+                "| Số điện thoại: " + phoneNumber +
+                "| Email: " + email;
     }
 }

@@ -1,8 +1,8 @@
 package furama_resort.views;
 
-import furama_resort.controllers.CustomerController;
-import furama_resort.controllers.EmployController;
-import furama_resort.controllers.FacilityController;
+import furama_resort.controllers.*;
+import furama_resort.models.Booking;
+import furama_resort.models.Contract;
 import furama_resort.models.facility.Facility;
 import furama_resort.models.facility.House;
 import furama_resort.models.facility.Room;
@@ -12,10 +12,7 @@ import furama_resort.models.person.Employee;
 import furama_resort.utils.exception.NumberFormat;
 
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
 import java.util.regex.Pattern;
 
 public class FuramaResortView {
@@ -24,25 +21,27 @@ public class FuramaResortView {
     private static EmployController employController = new EmployController();
     private static CustomerController customerController = new CustomerController();
     private static FacilityController facilityController = new FacilityController();
-    private static List<Employee> employeeList;
+    private static BookingController bookingController = new BookingController();
+    private static ContractController contractController = new ContractController();
+    //    private static
     private static String code;
     private static boolean findCode;
     private static Employee employee;
     private static Customer customer;
 
     public static void main(String[] args) {
-            displayMainMenu();
+        displayMainMenu();
     }
 
     private static void displayMainMenu() {
         do {
             System.out.println("-------Menu--------\n" +
-                    "1. Employee Management\n" +
-                    "2. Customer Management\n" +
-                    "3. Facility Management\n" +
-                    "4. Booking Management\n" +
-                    "5. Promotion Management\n" +
-                    "6. Exit");
+                    "1. Quản lí nhân viên\n" +
+                    "2. Quản lí khách hàng\n" +
+                    "3. Quản lí cơ sở\n" +
+                    "4. Quản lí booking\n" +
+                    "5. Quản lí khuyến mãi\n" +
+                    "6. Thoát");
             System.out.println("Chọn chức năng: ");
             choice = NumberFormat.checkChoice(choice);
             switch (choice) {
@@ -62,7 +61,7 @@ public class FuramaResortView {
                     displayPromotionMenu();
                     break;
                 case 6:
-                    System.out.println("Bye bye");
+                    System.out.println("Chào tạm biệt! Hẹn gặp lại.");
                     System.exit(0);
                 default:
                     System.out.println("Lựa chọn không đúng");
@@ -71,24 +70,200 @@ public class FuramaResortView {
     }
 
     private static void displayPromotionMenu() {
-        System.out.println("-----Promotion Manager----\n" +
-                "1. Display list customers use service\n" +
-                "2. Display list customers get voucher\n" +
-                "3. Return main menu\n");
+        System.out.println("-----Quản lí khuyến mãi----\n" +
+                "1. Hiển thị danh sách khách hàng sử dụng dịch vụ\n" +
+                "2. Hiển thị danh sách khách hàng nhận voucher\n" +
+                "3. Quay lại\n");
         System.out.println("Chọn chức năng: ");
         choice = NumberFormat.checkChoice(choice);
     }
 
     private static void displayBookingMenu() {
-        System.out.println("-----Booking Manager----\n" +
-                "1. Add new booking\n" +
-                "2. Display list booking\n" +
-                "3. Create new contracts\n" +
-                "4. Display list contracts\n" +
-                "5. Edit contracts\n" +
-                "6. Return main menu");
+        System.out.println("-----Quản lí booking----\n" +
+                "1. Thêm mới booking\n" +
+                "2. Hiển thị danh sách booking\n" +
+                "3. Tạo hợp đồng mới\n" +
+                "4. Hiển thị danh sách hợp đồng\n" +
+                "5. Chỉnh sửa hợp đồng\n" +
+                "6. Quay lại");
         System.out.println("Chọn chức năng: ");
         choice = NumberFormat.checkChoice(choice);
+        switch (choice) {
+            case 1:
+                addNewBooking();
+                break;
+            case 2:
+                displayListBooking();
+                break;
+            case 3:
+                creatNewContract();
+                break;
+            case 4:
+                displayListContract();
+                break;
+            case 5:
+//                editContract();
+                break;
+        }
+    }
+
+    private static void displayListContract() {
+        Set<Contract> contracts = contractController.getAllContract();
+        for (Contract contract : contracts) {
+            System.out.println(contract);
+        }
+    }
+
+    private static void creatNewContract() {
+        boolean checkExist;
+        Contract contract;
+        String bookingCode = null;
+        Queue<Booking> bookings = bookingController.getListBookingHouseAndVilla();
+
+        while (!bookings.isEmpty()) {
+            bookingCode = bookings.peek().getBookingCode();
+            checkExist = contractController.checkExistBookingCode(bookingCode);
+            if (checkExist) {
+                bookings.poll();
+            } else {
+                System.out.println("Nhập thông tin hợp đồng cho mã booking " + bookingCode);
+                contract = inputInformationContract(bookingCode);
+                contractController.addNewContract(contract);
+                System.out.println("Đã hoàn thành hợp đồng");
+            }
+        }
+        System.out.println("Không có booking mới");
+
+
+    }
+
+    private static Contract inputInformationContract(String bookingCode) {
+        String contractId;
+        boolean checkExistContractId;
+        do {
+            System.out.println("Nhập mã hợp đồng");
+            contractId = inputContractId();
+            checkExistContractId = contractController.checkExistContractId(contractId);
+            if (checkExistContractId) {
+                System.out.println("Id đã tồn tại");
+            }
+        } while (checkExistContractId);
+        System.out.println("Nhập số tiền đặt cọc");
+        Long deposit = Long.parseLong(scanner.nextLine());
+        System.out.println("Nhập tổng tiền thanh toán");
+        Long totalPayment = Long.parseLong(scanner.nextLine());
+        return new Contract(contractId, bookingCode, deposit, totalPayment);
+    }
+
+    private static String inputContractId() {
+        String contractId;
+        boolean checkContractId;
+        do {
+            contractId = scanner.nextLine();
+            checkContractId = Pattern.matches("^HD-[0-9]+$", contractId);
+            if (!checkContractId) {
+                System.out.println("Nhập đúng định dạng");
+            }
+        } while (!checkContractId);
+        return contractId;
+    }
+
+    private static void displayListBooking() {
+        Set<Booking> bookings = bookingController.getAll();
+        for (Booking booking : bookings) {
+            System.out.println(booking);
+        }
+    }
+
+    private static void addNewBooking() {
+        displayCustomerList();
+        boolean checkCodeCustomer;
+        boolean checkExistCode = true;
+        String codeService = null;
+        do {
+            System.out.println("Chọn mã khách hàng");
+            code = inputCodeCustomer();
+            checkCodeCustomer = customerController.findCodeCustomer(code);
+            if (checkCodeCustomer) {
+                displayListFacility();
+                System.out.println("Nhập mã dịch vụ");
+                codeService = checkCodeFacility();
+                checkExistCode = facilityController.checkExist(codeService);
+                if (!checkExistCode) {
+                    System.out.println("Mã dịch vụ không tồn tại");
+                }
+            } else {
+                System.out.println("Mã khách hàng không tồn tại");
+            }
+        } while (!checkExistCode || !checkCodeCustomer);
+        Booking booking = null;
+        if (codeService.contains("SVRO-") || codeService.contains("SVHO-") || codeService.contains("SVVL-")) {
+            if (codeService.contains("SVRO-")) {
+                System.out.println("Bạn chọn dịch vụ thuê Room. Nhập thông tin");
+                booking = informationBooking();
+
+            }
+            if (codeService.contains("SVHO-")) {
+                System.out.println("Bạn chọn dịch vụ thuê House. Nhập thông tin");
+                booking = informationBooking();
+
+            }
+            if (codeService.contains("SVVL-")) {
+                System.out.println("Bạn chọn dịch vụ thuê Villa. Nhập thông tin");
+                booking = informationBooking();
+            }
+        }
+        assert booking != null;
+        booking.setCustomerCode(code);
+        booking.setServiceCode(codeService);
+        bookingController.addNewBooking(booking);
+    }
+
+    private static Booking informationBooking() {
+        String bookingCode;
+        boolean checkExistBooking;
+        do {
+            bookingCode = inputBookingCode();
+            checkExistBooking = bookingController.checkExistBookingCode(bookingCode);
+            if (checkExistBooking) {
+                System.out.println("Mã booking đã tồn tại.");
+            }
+        } while (checkExistBooking);
+        System.out.println("Nhập ngày booking");
+        String bookingDay = inputDate();
+        System.out.println("Ngày bắt đầu thuê");
+        String beginDay = inputDate();
+        System.out.println("Ngày kết thúc thuê");
+        String endDay = inputDate();
+        return new Booking(bookingCode, bookingDay, beginDay, endDay);
+    }
+
+    private static String inputDate() {
+        String date;
+        boolean checkDay;
+        do {
+            date = scanner.nextLine();
+            checkDay = Pattern.matches("^([012][0-9]|3[12])/(0[0-9]|1[012])/(2[0-9]{3})$", date);
+            if (!checkDay) {
+                System.out.println("Nhập đúng định dạng");
+            }
+        } while (!checkDay);
+        return date;
+    }
+
+
+    private static String inputBookingCode() {
+        String bookingCode;
+        boolean checkCode;
+        do {
+            System.out.println("Nhập mã booking");
+            bookingCode = scanner.nextLine();
+            checkCode = Pattern.matches("BK-[0-9]{4}", bookingCode);
+            if (!checkCode) {
+                System.out.println("Phải đúng định dạng");
+            }
+        } while (!checkCode);
+        return bookingCode;
     }
 
     private static void displayFacilityMenu() {
@@ -109,6 +284,7 @@ public class FuramaResortView {
                     addNewFacility();
                     break;
                 case 3:
+                    displayListFacilityMaintenance();
                     break;
                 case 4:
                     removeFacility();
@@ -116,8 +292,16 @@ public class FuramaResortView {
                 case 5:
                     return;
             }
-        }while (true);
+        } while (true);
 
+    }
+
+    private static void displayListFacilityMaintenance() {
+        System.out.println("---Danh sách bảo trì----");
+        List<Facility> facilityList = facilityController.getMaintenance();
+        for (Facility facility : facilityList) {
+            System.out.println(facility);
+        }
     }
 
     private static void removeFacility() {
@@ -126,12 +310,12 @@ public class FuramaResortView {
         do {
             code = checkCodeFacility();
             checkExist = facilityController.checkExist(code);
-            if (checkExist){
+            if (checkExist) {
                 facilityController.removeFacility(code);
-            }else {
+            } else {
                 System.out.println("Code không tồn tại");
             }
-        }while (!checkExist);
+        } while (!checkExist);
 
 
     }
@@ -143,7 +327,7 @@ public class FuramaResortView {
                     "3. Add New Room\n" +
                     "4. Back to menu\n");
             choice = NumberFormat.checkChoice(choice);
-            switch (choice){
+            switch (choice) {
                 case 1:
                     addNewVilla();
                     break;
@@ -156,7 +340,7 @@ public class FuramaResortView {
                 case 4:
                     return;
             }
-        }while (true);
+        } while (true);
 
     }
 
@@ -167,23 +351,24 @@ public class FuramaResortView {
         do {
             code = checkCodeFacility();
             checkExist = facilityController.checkExist(code);
-            if (checkExist){
+            if (checkExist) {
                 System.out.println("Mã villa đã tồn tại. Nhập lại");
             }
-        }while (checkExist);
+        } while (checkExist);
         Facility villa = inputInformationFacility();
         villa.setServiceCode(code);
         System.out.println("Nhập tiêu chuẩn phòng");
-        String roomStandards = scanner.nextLine();
+        String roomStandards = checkNameFacility();
         System.out.println("Nhập số tầng");
         Integer numberOfFloor = inputNumberOfFloor();
         System.out.println("Nhập diện tích hồ bơi");
         double poolArea = checkArea();
 //        room.getServiceCode(),room.getServiceName(),room.getUsableArea(),room.getRentalCosts(),room.getMaximumPeople(),
 //                room.getRentalType(),freeService
-        Villa villa1 = new Villa(villa.getServiceCode(),villa.getServiceName(),villa.getUsableArea(),villa.getRentalCosts(),
-                villa.getMaximumPeople(),villa.getRentalType(),roomStandards,poolArea,numberOfFloor);
+        Villa villa1 = new Villa(villa.getServiceCode(), villa.getServiceName(), villa.getUsableArea(), villa.getRentalCosts(),
+                villa.getMaximumPeople(), villa.getRentalType(), roomStandards, poolArea, numberOfFloor);
         facilityController.addNewVilla(villa1);
+        System.out.println("Thêm thành công");
     }
 
 
@@ -194,48 +379,35 @@ public class FuramaResortView {
         do {
             code = checkCodeFacility();
             checkExist = facilityController.checkExist(code);
-            if (checkExist){
+            if (checkExist) {
                 System.out.println("Mã house đã tồn tại. Nhập lại");
             }
-        }while (checkExist);
+        } while (checkExist);
         Facility house = inputInformationFacility();
         house.setServiceCode(code);
         System.out.println("Nhập tiêu chuẩn phòng");
-        String roomStandards = checkName();
+        String roomStandards = checkNameFacility();
         System.out.println("Nhập số tầng");
         Integer numberOfFloor = inputNumberOfFloor();
 //        room.getServiceCode(),room.getServiceName(),room.getUsableArea(),room.getRentalCosts(),room.getMaximumPeople(),
 //                room.getRentalType(),freeService
-        House house1 = new House(house.getServiceCode(),house.getServiceName(),house.getUsableArea(),house.getRentalCosts(),
-                house.getMaximumPeople(),house.getRentalType(),roomStandards,numberOfFloor);
+        House house1 = new House(house.getServiceCode(), house.getServiceName(), house.getUsableArea(), house.getRentalCosts(),
+                house.getMaximumPeople(), house.getRentalType(), roomStandards, numberOfFloor);
         facilityController.addNewHouse(house1);
-
-
+        System.out.println("Thêm thành công");
     }
 
     private static Integer inputNumberOfFloor() {
         int number;
         do {
             number = Integer.parseInt(scanner.nextLine());
-            if (number<=0){
+            if (number <= 0) {
                 System.out.println("Số tầng phải lớn hơn 0 và nguyên");
             }
-        }while (number<=0);
+        } while (number <= 0);
         return number;
     }
 
-//    private static String checkCodeHouse() {
-//        String code;
-//        boolean checkCode;
-//        do {
-//            code = scanner.nextLine();
-//            checkCode = Pattern.matches("^SVHO-[0-9]{4}",code);
-//            if (!checkCode){
-//                System.out.println("Code chưa đúng định dạng");
-//            }
-//        }while (!checkCode);
-//        return code;
-//    }
 
     private static void addNewRoom() {
         String code;
@@ -244,16 +416,16 @@ public class FuramaResortView {
         do {
             code = checkCodeFacility();
             checkExist = facilityController.checkExist(code);
-            if (checkExist){
+            if (checkExist) {
                 System.out.println("Mã đã tồn tại. Nhập mã mới");
             }
-        }while (checkExist);
+        } while (checkExist);
         Facility room = inputInformationFacility();
         System.out.println("Nhập dịch vụ miễn phí kèm theo");
         String freeService = scanner.nextLine();
         room.setServiceCode(code);
-        Room room1 = new Room(room.getServiceCode(),room.getServiceName(),room.getUsableArea(),room.getRentalCosts(),room.getMaximumPeople(),
-                room.getRentalType(),freeService);
+        Room room1 = new Room(room.getServiceCode(), room.getServiceName(), room.getUsableArea(), room.getRentalCosts(), room.getMaximumPeople(),
+                room.getRentalType(), freeService);
         facilityController.addNewRoom(room1);
         System.out.println("Thêm thành công");
 
@@ -263,7 +435,7 @@ public class FuramaResortView {
 
     private static Facility inputInformationFacility() {
         System.out.println("Nhập tên dịch vụ");
-        String name = checkName();
+        String name = checkNameFacility();
         System.out.println("Nhập diện tích sử dụng");
         Double area = checkArea();
         System.out.println("Nhập chi phí");
@@ -272,7 +444,7 @@ public class FuramaResortView {
         Integer maxPeople = checkMaxPeople();
         System.out.println("Nhập kiểu thuê");
         String rentalType = selectType();
-        return new Facility(name,area,cost,maxPeople,rentalType);
+        return new Facility(name, area, cost, maxPeople, rentalType);
     }
 
     private static String selectType() {
@@ -282,7 +454,7 @@ public class FuramaResortView {
                 "3. Theo Ngày\n" +
                 "4. Theo giờ");
         choice = NumberFormat.checkChoice(choice);
-        switch (choice){
+        switch (choice) {
             case 1:
                 rentalType = "Theo năm";
                 break;
@@ -303,14 +475,14 @@ public class FuramaResortView {
         int maxPeople = 0;
         do {
             try {
-                maxPeople  = Integer.parseInt(scanner.nextLine());
-                if (maxPeople<=0 || maxPeople>=20){
+                maxPeople = Integer.parseInt(scanner.nextLine());
+                if (maxPeople <= 0 || maxPeople >= 20) {
                     System.out.println("Số lượng phải lớn hơn 0 và nhỏ hơn 20");
                 }
-            }catch (NumberFormatException e){
+            } catch (NumberFormatException e) {
                 System.err.println("Phải là số");
             }
-        }while (maxPeople<=0||maxPeople>=20);
+        } while (maxPeople <= 0 || maxPeople >= 20);
         return maxPeople;
     }
 
@@ -319,14 +491,14 @@ public class FuramaResortView {
         do {
             try {
                 cost = Long.parseLong(scanner.nextLine());
-                if (cost<=0){
+                if (cost <= 0) {
                     System.out.println("Chi phí phải lớn hơn 0");
                 }
-            }catch (NumberFormatException e){
+            } catch (NumberFormatException e) {
                 System.err.println("Phải là số");
             }
 
-        }while (cost<=0);
+        } while (cost <= 0);
         return cost;
     }
 
@@ -335,27 +507,27 @@ public class FuramaResortView {
         do {
             try {
                 area = Double.parseDouble(scanner.nextLine());
-                if (area<=30){
+                if (area <= 30) {
                     System.out.println("Diện tích phải lớn hơn 30m2. Nhập lại");
                 }
-            }catch (NumberFormatException e){
+            } catch (NumberFormatException e) {
                 System.err.println("Phải là số");
             }
 
-        }while (area<=30);
+        } while (area <= 30);
         return area;
     }
 
-    private static String checkName() {
+    private static String checkNameFacility() {
         String name;
         boolean checkName;
         do {
             name = scanner.nextLine();
-            checkName = Pattern.matches("^[A-Z]\\w+$",name);
-            if (!checkName){
+            checkName = Pattern.matches("^[A-Z]\\w+$", name);
+            if (!checkName) {
                 System.out.println("Phải viết hoa chữ cái đầu");
             }
-        }while (!checkName);
+        } while (!checkName);
         return name;
     }
 
@@ -364,23 +536,20 @@ public class FuramaResortView {
         boolean checkCodeRoom;
         do {
             code = scanner.nextLine();
-            checkCodeRoom = Pattern.matches("^SV(RO|HO|VL)-[0-9]{4}$",code);
-            if (!checkCodeRoom){
+            checkCodeRoom = Pattern.matches("^SV(RO|HO|VL)-[0-9]{4}$", code);
+            if (!checkCodeRoom) {
                 System.out.println("Mã không đúng định dạng");
             }
-        }while (!checkCodeRoom);
+        } while (!checkCodeRoom);
         return code;
     }
 
     private static void displayListFacility() {
-        List<Facility> facilityList = facilityController.getAll();
-        for (Facility facility: facilityList){
+        Map<Facility, Integer> facilityMap = facilityController.getAll();
+        Set<Facility> facilitySet = facilityMap.keySet();
+        for (Facility facility : facilitySet) {
             System.out.println(facility);
         }
-//        Set<Facility> facilitySet = facilityController.getAllMap();
-//        for (Facility facility:facilitySet){
-//            System.out.println(facility);
-//        }
     }
 
     private static void displayCustomerMenu() {
@@ -412,6 +581,8 @@ public class FuramaResortView {
                     break;
                 case 6:
                     return;
+                default:
+                    System.out.println("Lựa chọn không hợp lệ");
             }
         } while (true);
 
@@ -488,7 +659,7 @@ public class FuramaResortView {
 //            customer.getStyleCustomer()+COMA+customer.getAddress());
     private static Customer inputInformationCustomer() {
         System.out.println("Nhập tên khách hàng");
-        String name = inputName();
+        String name = inputNameEmployAndCustomer();
         System.out.println("Nhập ngày sinh (Định dạng dd/mm/yyyy)");
         String date = inputDateOfBirth();
         System.out.println("Nhập giới tính");
@@ -539,11 +710,17 @@ public class FuramaResortView {
     private static String inputEmail() {
         boolean checkEmail;
         String email;
+        String[]lengthName;
         do {
             email = scanner.nextLine();
             checkEmail = Pattern.matches("^[a-zA-Z][\\w-]+@([\\w]+\\.[\\w]+|[\\w]+\\.[\\w]{2,}\\.[\\w]{2,})$", email);
             if (!checkEmail) {
                 System.out.println("Email không đúng");
+            }else {
+              lengthName = email.split("@");
+              if (lengthName[0].isEmpty() || lengthName[0].length()>50){
+                  checkEmail = false;
+              }
             }
         } while (!checkEmail);
         return email;
@@ -566,20 +743,24 @@ public class FuramaResortView {
         System.out.println("-----Danh sách khách hàng----");
         List<Customer> customerList;
         customerList = customerController.getAll();
-        for (Customer customer : customerList) {
-            System.out.println(customer);
+        if (customerList==null){
+            System.out.println("Danh sách rỗng");
+        }else {
+            for (Customer customer : customerList) {
+                System.out.println(customer);
+            }
         }
     }
 
     private static void displayEmployMenu() {
         do {
             System.out.println("-----Employ Manager----\n" +
-                    "1. Display list employees\n" +
-                    "2. Add new employee\n" +
-                    "3. Edit employee\n" +
-                    "4. Delete employee\n" +
-                    "5. Search by name employee\n" +
-                    "6. Return main menu");
+                    "1. Hiển thị danh sách nhân viên\n" +
+                    "2. Thêm nhân viên mới\n" +
+                    "3. Chỉnh sửa nhân viên theo mã\n" +
+                    "4. Xóa nhân viên\n" +
+                    "5. Tìm nhân viên theo tên\n" +
+                    "6. Quay lại");
             System.out.println("Chọn chức năng");
             choice = NumberFormat.checkChoice(choice);
             switch (choice) {
@@ -596,16 +777,18 @@ public class FuramaResortView {
                     removeEmployee();
                     break;
                 case 5:
-                    searchByName();
+                    searchByNameEmployee();
                     break;
                 case 6:
                     return;
+                default:
+                    System.out.println("Lựa chọn không hợp lệ");
             }
 
         } while (true);
     }
 
-    private static void searchByName() {
+    private static void searchByNameEmployee() {
         System.out.println("Nhập tên nhân viên cần tìm");
         String name = scanner.nextLine();
         List<Employee> employees = employController.searchByName(name);
@@ -621,15 +804,19 @@ public class FuramaResortView {
 
     private static void removeEmployee() {
         code = inputCodeEmployee();
-        findCode = findCode(code);
+        findCode = findEmployeeByCode(code);
         if (findCode) {
             System.out.println("Bạn muốn xóa nhân viên có mã " + code + "\n" +
                     "1. Xóa\n" +
                     "2. Hủy");
             choice = NumberFormat.checkChoice(choice);
             if (choice == 1) {
-                employController.removeEmployee(code);
-                System.out.println("Xóa thành công");
+                if (findCode){
+                    employController.removeEmployee(code);
+                    System.out.println("Xóa thành công");
+                }else {
+                    System.out.println("Xóa không thành công");
+                }
             }
         }
     }
@@ -637,31 +824,145 @@ public class FuramaResortView {
     private static void editEmployee() {
         do {
             code = inputCodeEmployee();
-            findCode = findCode(code);
+            findCode = findEmployeeByCode(code);
             if (!findCode) {
-                System.out.println("Code đã tồn tại. Nhập lại");
+                System.out.println("Code không tồn tại.");
             } else {
-                System.out.println("Nhập thông tin sửa");
-                employee = informationEmployee();
-                employee.setCode(code);
-                employController.editEmployee(employee);
-                System.out.println("Sửa thành công");
+                employee = employController.getEmployee(code);
+                System.out.println(employee);
+                System.out.println("Bạn muốn sửa: \n" +
+                        "1. Toàn bộ thông tin\n" +
+                        "2. Một số thông tin\n" +
+                        "3. Hủy");
+                choice = NumberFormat.checkChoice(choice);
+                switch (choice){
+                    case 1:
+                        editAll();
+                        break;
+                    case 2:
+                        editSomeInformation();
+                        break;
+                    case 3:
+                        return;
+                    default:
+                        System.out.println("Lựa chọn không hợp lệ");
+                }
+//                System.out.println("Nhập thông tin sửa");
+//                employee = informationEmployee();
+//                employee.setCode(code);
+//                employController.editEmployee(employee);
+//                System.out.println("Sửa thành công");
             }
         } while (!findCode);
 
 
     }
 
-    private static boolean findCode(String code) {
+    private static void editSomeInformation() {
+        do {
+            System.out.println(employController.getEmployee(code));
+            System.out.println("Chọn thông tin cần sửa\n" +
+                    "1. Họ và tên\n" +
+                    "2. Ngày Sinh\n" +
+                    "3. Giới tính\n" +
+                    "4. Số CMND\n" +
+                    "5. Số điện thoại\n" +
+                    "6. Email\n" +
+                    "7. Trình độ\n" +
+                    "8. Vị Trí\n" +
+                    "9. Lương\n" +
+                    "10. Thoát");
+            choice = NumberFormat.checkChoice(choice);
+            switch (choice){
+                case 1:
+                    System.out.println("Tên cũ: "+employee.getName());
+                    System.out.println("Nhập tên mới");
+                    String name;
+                    name = inputNameEmployAndCustomer();
+                    employee.setName(name);
+                    break;
+                case 2:
+                    System.out.println("Ngày sinh cũ: "+employee.getDateOfBirth());
+                    System.out.println("Nhập ngày sinh");
+                    String day;
+                    day = inputDateOfBirth();
+                    employee.setDateOfBirth(day);
+                    break;
+                case 3:
+                    System.out.println("Giới tính: "+employee.getGender());
+                    System.out.println("Chọn giới tính: ");
+                    String gender;
+                    gender = inputGender();
+                    employee.setGender(gender);
+                    break;
+                case 4:
+                    System.out.println("Số CMND: "+employee.getIdCard());
+                    System.out.println("Nhập số CMND mới: ");
+                    String idCard;
+                    idCard = inputIdCard();
+                    employee.setIdCard(idCard);
+                    break;
+                case 5:
+                    System.out.println("Số điện thoại: "+employee.getPhoneNumber());
+                    System.out.println("Nhập số điện thoại: ");
+                    String phoneNumber;
+                    phoneNumber = inputPhoneNumber();
+                    employee.setPhoneNumber(phoneNumber);
+                    break;
+                case 6:
+                    System.out.println("Email cũ: "+employee.getEmail());
+                    System.out.println("Nhập e mail mới: ");
+                    String email;
+                    email = inputEmail();
+                    employee.setEmail(email);
+                    break;
+                case 7:
+                    System.out.println("Trình độ cũ: "+employee.getLevel());
+                    System.out.println("Chọn trình độ: ");
+                    String level;
+                    level = selectLevelEmploy();
+                    employee.setLevel(level);
+                    break;
+                case 8:
+                    System.out.println("Vị trí: "+employee.getLocation());
+                    System.out.println("Chọn vị trí mới: ");
+                    String location;
+                    location = selectLocation();
+                    employee.setGender(location);
+                    break;
+                case 9:
+                    System.out.println("Lương cũ: "+employee.getWage());
+                    System.out.println("Nhập lương mới: ");
+                    Long wage;
+                    wage = inputWage();
+                    employee.setWage(wage);
+                    break;
+                case 10:
+                    return;
+            }
+            employController.editEmployee(employee);
+            System.out.println("Sửa thành công");
+        }while (true);
+
+    }
+
+    private static void editAll() {
+        System.out.println(employController.getEmployee(code));
+        System.out.println("Nhập thông tin sửa");
+                employee = informationEmployee();
+                employee.setCode(code);
+                employController.editEmployee(employee);
+                System.out.println("Sửa thành công");
+    }
+
+    private static boolean findEmployeeByCode(String code) {
         return employController.findCode(code);
     }
 
-    // Mã nhân viên, Họ tên, Ngày sinh, Giới tính,
-//    Số CMND, Số Điện Thoại, Email, Trình độ, Vị trí, lương
     private static void addNewEmployee() {
         do {
             code = inputCodeEmployee();
-            findCode = findCode(code);
+            findCode = findEmployeeByCode(code);
             if (findCode) {
                 System.out.println("Code trùng. Chọn code khác");
             } else {
@@ -674,16 +975,22 @@ public class FuramaResortView {
     }
 
     private static void displayEmployeeList() {
+        List<Employee> employeeList;
         System.out.println("---Danh sách nhân viên---");
         employeeList = employController.getAll();
-        for (Employee employee : employeeList) {
-            System.out.println(employee);
+        if (employeeList == null) {
+            System.out.println("Không có nhân viên nào");
+        } else {
+            for (Employee employee : employeeList) {
+                System.out.println(employee);
+            }
         }
+
     }
 
     private static Employee informationEmployee() {
         System.out.println("Nhập họ và tên(Viết hoa chữ cái đầu)");
-        String name = inputName();
+        String name = inputNameEmployAndCustomer();
         System.out.println("Nhập ngày sinh");
         String dateOfBirth = inputDateOfBirth();
         System.out.println("Chọn giới tính");
@@ -695,7 +1002,7 @@ public class FuramaResortView {
         System.out.println("Nhập email");
         String email = scanner.nextLine();
         System.out.println("Chọn trình độ");
-        String level = selectLevel();
+        String level = selectLevelEmploy();
         System.out.println("Vị trí");
         String location = selectLocation();
         System.out.println("Nhập lương");
@@ -724,19 +1031,19 @@ public class FuramaResortView {
                 System.out.println("Nhập đúng định dạng dd/mm/yyyy hoặc bạn chưa đủ 18 tuổi");
             }
             year = Integer.parseInt(date.substring(6));
-            month = Integer.parseInt(date.substring(3,5));
-            day = Integer.parseInt(date.substring(0,2));
-            checkMonth = monthNow-month;
-            age = yearNow-year;
-            checkDay = dayNow- day;
-            if (age == 18){
-                if (checkMonth == 0){
-                    if (checkDay<0){
+            month = Integer.parseInt(date.substring(3, 5));
+            day = Integer.parseInt(date.substring(0, 2));
+            checkMonth = monthNow - month;
+            age = yearNow - year;
+            checkDay = dayNow - day;
+            if (age == 18) {
+                if (checkMonth == 0) {
+                    if (checkDay < 0) {
                         checkDate = false;
                         System.out.println("Bạn Không đủ tuổi");
                     }
                 }
-            }else if (age<18){
+            } else if (age < 18) {
                 checkDate = false;
                 System.out.println("Bạn không đủ tuổi");
             }
@@ -761,21 +1068,13 @@ public class FuramaResortView {
             case 3:
                 gender = "Khác";
                 break;
+            default:
+                System.out.println("Lựa chọn không hợp lệ");
         }
         return gender;
     }
 
     private static Long inputWage() {
-//        String wage;
-//        boolean checkWage;
-//        do {
-//            wage = scanner.nextLine();
-//            checkWage = Pattern.matches("^[1-9]\\d+$", wage);
-//            if (!checkWage) {
-//                System.out.println("Lương phải lớn hơn 0");
-//            }
-//        } while (!checkWage);
-//        return wage;
         long wage = 0;
         do {
             try {
@@ -783,7 +1082,7 @@ public class FuramaResortView {
                 if (wage <= 0) {
                     System.out.println("Lương phải lớn hơn 0");
                 }
-            }catch (NumberFormatException e){
+            } catch (NumberFormatException e) {
                 System.err.println("Phải là số");
             }
 
@@ -825,7 +1124,7 @@ public class FuramaResortView {
         return location;
     }
 
-    private static String selectLevel() {
+    private static String selectLevelEmploy() {
         String level = null;
         System.out.println("1. Trung cấp\n" +
                 "2. Cao Đẳng\n" +
@@ -877,7 +1176,7 @@ public class FuramaResortView {
         return idCard;
     }
 
-    private static String inputName() {
+    private static String inputNameEmployAndCustomer() {
         boolean checkName;
         String name;
         do {
@@ -886,6 +1185,9 @@ public class FuramaResortView {
 //            checkName = Pattern.matches("^([\\p{Lu}][\\p{Ll}]{1,8})(\\s([\\p{Lu}]|[\\p{Lu}][\\p{Ll}]{1,10})){0,5}$", name);
             if (!checkName) {
                 System.out.println("Viết hoa kí tự đầu của mỗi từ");
+            }else if (name.length()>50){
+                System.out.println("Độ dài không đúng");
+                checkName = false;
             }
         } while (!checkName);
         return name;
